@@ -7,7 +7,13 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, View, ActivityIndicator} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  BackHandler,
+  Alert,
+} from 'react-native';
 import {WebView} from 'react-native-webview';
 
 class App extends Component {
@@ -16,11 +22,35 @@ class App extends Component {
 
     this.state = {
       visible: true,
+      exit: false,
     };
   }
 
   hideSpinner() {
     this.setState({visible: false});
+  }
+
+  backAction = () => {
+    Alert.alert('Hold on!', 'Are you sure you want to exit?', [
+      {
+        text: 'Cancel',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {text: 'YES', onPress: () => BackHandler.exitApp()},
+    ]);
+    return true;
+  };
+
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.backAction,
+    );
+  }
+
+  componentWillUnmount() {
+    this.backHandler.remove();
   }
 
   render() {
