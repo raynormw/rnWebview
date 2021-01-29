@@ -8,14 +8,19 @@
 
 import React, {Component} from 'react';
 import {StyleSheet, View, ActivityIndicator} from 'react-native';
-// import { WebView } from 'react-native-webview';
+import {WebView} from 'react-native-webview';
 
 class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
+      <WebView
+        style={styles.container}
+        source={{
+          uri:
+            'http://180.215.13.119/core/m/Default.aspx?ref=99bet303&mobile=auto',
+        }}>
+        {/* <ActivityIndicator size="large" color="#0000ff" /> */}
+      </WebView>
     );
   }
 }
